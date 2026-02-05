@@ -1,0 +1,27 @@
+# IDE
+.metadata/
+.settings/
+.project
+.classpath
+.factorypath
+.vscode/
+
+# Build
+bin/
+target/
+build/
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Backups & Archives
+backups/
+safarsathi_project_backup/
+*.zip
+*.tar.gz
+*.rar
+
+# OS
+.DS_Store
+Thumbs.db
