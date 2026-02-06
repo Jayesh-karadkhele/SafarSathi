@@ -5,6 +5,6 @@ RUN mvn clean package -DskipTests
 
 # Run stage
 FROM openjdk:17.0.1-jdk-slim
-COPY --from=build /target/SafarSaathiBackend-0.0.1-SNAPSHOT.jar safarsaathi.jar
+COPY --from=build /target/springboot_backend_template-0.0.1.jar safarsaathi.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","safarsaathi.jar"]
