@@ -1,0 +1,104 @@
+package com.travel.controllers;
+
+import com.travel.dtos.PaymentRequest;
+import com.travel.dtos.PaymentResponse;
+import com.travel.services.PaymentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+import com.travel.services.EmailService; // Ensure this is imported
+
+@RestController
+@RequestMapping("/api/payments")
+@CrossOrigin(origins = "*")
+public class PaymentController {
+
+    @Autowired
+    private PaymentService paymentService;
+
+    @Autowired
+    private com.travel.repositories.BookingRepository bookingRepository;
+
+    @Autowired
+    private com.travel.utils.PdfInvoiceGenerator pdfInvoiceGenerator;
+
+    @Autowired
+    private EmailService emailService; // Inject EmailService
+
+    // In-memory OTP Storage (simple implementation for demonstration)
+    private Map<String, String> otpStorage = new ConcurrentHashMap<>();
+
+    @PostMapping("/send-otp")
+    public ResponseEntity<?> sendOtp(@RequestParam String email) {
+        String otp = String.format("%06d", new Random().nextInt(999999));
+        otpStorage.put(email, otp);
+
+        // Use a separate thread to send email to avoid blocking the response
+        // significantly
+        new Thread(() -> emailService.sendPaymentOtp(email, otp)).start();
+
+        return ResponseEntity.ok("OTP sent to " + email);
+    }
+
+    @PostMapping("/validate-otp")
+    public ResponseEntity<?> validateOtp(@RequestBody Map<String, String> data) {
+        String email = data.get("email");
+        String otp = data.get("otp");
+
+        if (otpStorage.containsKey(email) && otpStorage.get(email).equals(otp)) {
+            otpStorage.remove(email); // OTP is one-time use
+            return ResponseEntity.ok(Map.of("status", "success", "message", "OTP Verified"));
+        }
+        return ResponseEntity.badRequest().body(Map.of("status", "error", "message", "Invalid OTP"));
+    }
+
+    @GetMapping("/invoice/{bookingId}")
+    public ResponseEntity<?> downloadInvoice(@PathVariable Long bookingId) {
+        try {
+            com.travel.entities.Bookings booking = bookingRepository.findById(bookingId)
+                    .orElseThrow(() -> new RuntimeException("Booking not found with ID: " + bookingId));
+
+            byte[] pdfContent = pdfInvoiceGenerator.generateInvoice(booking);
+
+            return ResponseEntity.ok()
+                    .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment; filename=invoice_" + bookingId + ".pdf")
+                    .contentType(org.springframework.http.MediaType.APPLICATION_PDF)
+                    .body(pdfContent);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error generating invoice: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/create-order")
+    public ResponseEntity<?> createOrder(@RequestBody PaymentRequest request) {
+        System.out.println("DEBUG: createOrder called with payload: " + request);
+        try {
+            PaymentResponse response = paymentService.createOrder(request);
+            System.out.println("DEBUG: Order created successfully: " + response);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            System.err.println("ERROR: createOrder failed: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Error creating order: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/verify-payment")
+    public ResponseEntity<?> verifyPayment(@RequestBody Map<String, String> data) {
+        try {
+            boolean isValid = paymentService.verifyPayment(data);
+            if (isValid) {
+                return ResponseEntity.ok(Map.of("status", "success", "message", "Payment verified successfully"));
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("status", "error", "message", "Invalid signature"));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("status", "error", "message", e.getMessage()));
+        }
+    }
+}
