@@ -9,7 +9,6 @@ import com.travel.services.PackageService;
 
 @RestController
 @RequestMapping("/api/packages")
-@CrossOrigin(origins = "*") // 🔓 RE-ADDED CORS FOR STABILITY
 public class PackageController {
 
     @Autowired

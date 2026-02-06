@@ -11,7 +11,6 @@ import com.travel.services.UserService;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 
     @Autowired
@@ -38,7 +37,7 @@ public class UserController {
             return ResponseEntity.status(401).body(e.getMessage());
         }
     }
-    
+
     // 3. Get All Users
     @GetMapping
     public List<User> getAllUsers() {

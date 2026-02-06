@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/trips")
-@CrossOrigin(origins = "*") // 🔓 RE-ADDED CORS FOR STABILITY
 public class TripController {
 
     @Autowired

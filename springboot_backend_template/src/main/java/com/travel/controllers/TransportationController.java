@@ -8,7 +8,6 @@ import com.travel.services.TransportationService;
 
 @RestController
 @RequestMapping("/api/transportation")
-@CrossOrigin(origins = "http://localhost:5173")
 public class TransportationController {
 
     @Autowired

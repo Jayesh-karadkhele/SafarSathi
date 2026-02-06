@@ -14,7 +14,6 @@ import com.travel.services.EmailService; // Ensure this is imported
 
 @RestController
 @RequestMapping("/api/payments")
-@CrossOrigin(origins = "*")
 public class PaymentController {
 
     @Autowired

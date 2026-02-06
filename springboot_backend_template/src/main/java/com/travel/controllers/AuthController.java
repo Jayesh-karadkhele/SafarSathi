@@ -15,7 +15,6 @@ import com.travel.utils.JwtUtils;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*") // 🔓 RE-ADDED CORS FOR STABILITY
 public class AuthController {
 
     @Autowired
