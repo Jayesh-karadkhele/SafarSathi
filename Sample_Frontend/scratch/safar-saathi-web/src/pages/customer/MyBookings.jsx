@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import api from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { Trash2, Calendar, MapPin, Wallet, Download } from 'lucide-react';
 
@@ -8,7 +8,7 @@ const MyBookings = ({ bookings, refresh }) => {
 
     const handleDownloadInvoice = async (bookingId, tripName) => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/payments/invoice/${bookingId}`, {
+            const response = await api.get(`/payments/invoice/${bookingId}`, {
                 responseType: 'blob',
             });
             const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -28,7 +28,7 @@ const MyBookings = ({ bookings, refresh }) => {
         if (window.confirm("Are you sure you want to cancel this booking?")) {
             try {
                 // 1. Backend Call
-                await axios.delete(`http://localhost:8080/api/trips/${id}`);
+                await api.delete(`/trips/${id}`);
 
                 // 2. Local feedback
                 alert("Trip cancelled successfully.");

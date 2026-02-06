@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plane, Hotel, Home, Train, Bus, Car, Palmtree, CreditCard, ChevronDown, MapPin, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../api/axios';
 
 const HomeSearch = () => {
     const [activeTab, setActiveTab] = useState('Flights');
@@ -40,7 +40,7 @@ const HomeSearch = () => {
     const fetchResults = async () => {
         try {
             setIsSearching(true);
-            const response = await axios.get(`http://localhost:8080/api/packages/search?query=${query}`);
+            const response = await api.get(`/packages/search?query=${query}`);
             setResults(response.data);
             setShowDropdown(true);
         } catch (error) {

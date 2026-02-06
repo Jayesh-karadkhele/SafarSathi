@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../api/axios";
 
 export default function Register() {
     const [success, setSuccess] = useState(false);
@@ -23,7 +23,7 @@ export default function Register() {
         setLoading(true);
 
         try {
-            await axios.post('http://localhost:8080/auth/register', formData);
+            await api.post('/auth/register', formData);
             setSuccess(true);
 
             setTimeout(() => {

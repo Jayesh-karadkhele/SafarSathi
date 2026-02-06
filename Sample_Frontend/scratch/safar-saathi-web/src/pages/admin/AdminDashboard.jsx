@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, Outlet } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../api/axios';
 import { Users, Package, LayoutDashboard, PlusCircle, Trash2, Edit3, ShieldCheck } from 'lucide-react';
-import AddTrip from './AddTrip';       
-import PackageList from './PackageList'; 
+import AddTrip from './AddTrip';
+import PackageList from './PackageList';
 
 // --- 1. Overview Component ---
 const AdminOverview = () => {
@@ -14,8 +14,8 @@ const AdminOverview = () => {
         const fetchStats = async () => {
             try {
                 const [uRes, pRes] = await Promise.all([
-                    axios.get('http://localhost:8080/api/users'),
-                    axios.get('http://localhost:8080/api/packages')
+                    api.get('/users'),
+                    api.get('/packages')
                 ]);
                 setStats({ users: uRes.data.length, packages: pRes.data.length });
             } catch (err) { console.error("Stats fetch failed", err); }
@@ -29,7 +29,7 @@ const AdminOverview = () => {
                 <h3 className="text-2xl font-bold text-gray-800">Admin Command Center</h3>
                 <p className="text-gray-500">Monitor and manage the Safar-Saathi ecosystem.</p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* User Stats */}
                 <div className="bg-blue-600 p-6 rounded-2xl text-white shadow-lg shadow-blue-200">
@@ -71,14 +71,14 @@ const UserManagement = () => {
     useEffect(() => { fetchUsers(); }, []);
 
     const fetchUsers = () => {
-        axios.get('http://localhost:8080/api/users')
+        api.get('/users')
             .then(res => setUsers(res.data))
             .catch(err => console.error("Fetch failed", err));
     };
 
     const handleDelete = async (id) => {
         if (window.confirm("Delete this user permanently?")) {
-            await axios.delete(`http://localhost:8080/api/users/${id}`);
+            await api.delete(`/users/${id}`);
             setUsers(users.filter(u => u.userId !== id));
         }
     };
@@ -107,10 +107,9 @@ const UserManagement = () => {
                                     <div className="text-sm text-gray-500">{user.email}</div>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <span className={`px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase ${
-                                        user.userRole === 'ADMIN' ? 'bg-purple-100 text-purple-700' : 
-                                        user.userRole === 'VENDOR' ? 'bg-orange-100 text-orange-700' : 'bg-blue-100 text-blue-700'
-                                    }`}>
+                                    <span className={`px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase ${user.userRole === 'ADMIN' ? 'bg-purple-100 text-purple-700' :
+                                            user.userRole === 'VENDOR' ? 'bg-orange-100 text-orange-700' : 'bg-blue-100 text-blue-700'
+                                        }`}>
                                         {user.userRole || 'CUSTOMER'}
                                     </span>
                                 </td>

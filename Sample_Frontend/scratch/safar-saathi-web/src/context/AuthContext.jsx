@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api/axios";
 
 const AuthContext = createContext(null);
 
@@ -28,8 +28,8 @@ export const AuthProvider = ({ children }) => {
   // ✅ CLEAN LOGIN (NO OVER-VALIDATION)
   const login = async (email, password) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8080/auth/login",
+      const response = await api.post(
+        "/auth/login",
         { email, password }
       );
 
