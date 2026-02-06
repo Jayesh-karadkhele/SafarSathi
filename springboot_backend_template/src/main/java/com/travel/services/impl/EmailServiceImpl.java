@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +21,7 @@ public class EmailServiceImpl implements EmailService {
     @Value("${spring.mail.username}")
     private String fromEmail;
 
+    @Async
     @Override
     public void sendLoginNotification(User user) {
         try {
@@ -52,6 +54,7 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
+    @Async
     @Override
     public void sendBookingConfirmation(User user, Bookings booking, byte[] invoicePdf) {
         try {
@@ -88,6 +91,7 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
+    @Async
     @Override
     public void sendWelcomeEmail(User user) {
         try {
@@ -118,6 +122,7 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
+    @Async
     @Override
     public void sendPaymentOtp(String email, String otp) {
         try {
