@@ -268,7 +268,10 @@ const PackageDetail = () => {
                                                 </li>
                                             ))}
                                         </ul>
-                                        <button className={`w-full py-3 rounded-xl font-black text-[11px] uppercase tracking-widest transition-all ${tier.buttonStyle}`}>
+                                        <button
+                                            onClick={() => handleBook(tier.name, tier.price)}
+                                            className={`w-full py-3 rounded-xl font-black text-[11px] uppercase tracking-widest transition-all ${tier.buttonStyle}`}
+                                        >
                                             Select {tier.name}
                                         </button>
                                     </div>
@@ -279,6 +282,7 @@ const PackageDetail = () => {
                     </div>
                 </div>
             </div>
+
         </div>
     );
 };

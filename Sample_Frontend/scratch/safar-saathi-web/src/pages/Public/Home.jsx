@@ -1,41 +1,15 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import HomeSearch from "../../components/home/HomeSearch";
+import ScrollScenery from "../../components/home/ScrollScenery";
 
 export default function Home() {
     const navigate = useNavigate();
 
     return (
         <div className="bg-gray-50 min-h-screen">
-            {/* Hero Section */}
-            <div className="relative h-[500px] bg-gradient-to-b from-[#051322] to-[#15457b] overflow-hidden">
-                {/* Decorative background elements */}
-                <div className="absolute inset-0 opacity-40">
-                    <img
-                        src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05"
-                        className="w-full h-full object-cover mix-blend-overlay"
-                        alt="Travel"
-                    />
-                </div>
-
-                <div className="relative z-10 max-w-7xl mx-auto px-6 pt-40 text-center">
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-white text-4xl md:text-6xl font-black mb-6 tracking-tight drop-shadow-lg"
-                    >
-                        SafarSaathi
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        className="text-white/90 text-xl font-bold tracking-wide"
-                    >
-                        Make Your Travel Dreams Come True
-                    </motion.p>
-                </div>
-            </div>
+            {/* Scroll-based Hero Animation */}
+            <ScrollScenery />
 
             {/* Search Widget */}
             <HomeSearch />
