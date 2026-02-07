@@ -45,9 +45,6 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private com.travel.services.PostPaymentService postPaymentService;
 
-    @Autowired
-    private com.travel.services.PostPaymentService postPaymentService;
-
     @Override
     public PaymentResponse createOrder(PaymentRequest request) throws Exception {
         RazorpayClient client = new RazorpayClient(keyId, keySecret);
