@@ -12,6 +12,7 @@ import com.travel.services.TripService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -123,24 +124,16 @@ public class PaymentServiceImpl implements PaymentService {
 
             Bookings savedBooking = bookingRepository.save(booking);
 
-            // 4. Update Trip
-            trip.setBooking(savedBooking);
-            // trip.setTripStatus(TripStatus.CONFIRMED); // If TripStatus has CONFIRMED? It
-            // has SCHEDULED/IN_PROGRESS.
-            // We'll keep it SCHEDULED but the Booking tells us it's confirmed.
-            tripRepository.save(trip);
-
             // 5. Link Payment to Booking
             payment.setBooking(savedBooking);
+            // 6. Update Trip Status to CONFIRMED for clear "PAID" status
+            trip.setTripStatus(TripStatus.CONFIRMED);
+            tripRepository.save(trip);
             paymentRepository.save(payment);
 
-            // 📧 6. Send Confirmation Email with PDF Invoice
-            try {
-                byte[] invoicePdf = pdfInvoiceGenerator.generateInvoice(savedBooking);
-                emailService.sendBookingConfirmation(trip.getCustomer(), savedBooking, invoicePdf);
-            } catch (Exception e) {
-                System.err.println("ERROR: Post-payment email/PDF failed: " + e.getMessage());
-            }
+            // 🚀 7. ASYNC POST-PAYMENT TASKS (PDF & Email)
+            // This prevents the frontend from "freezing" while waiting for the email
+            sendPostPaymentNotificationAsync(savedBooking);
 
             return true;
         } else {
@@ -151,6 +144,22 @@ public class PaymentServiceImpl implements PaymentService {
                 paymentRepository.save(payment);
             }
             return false;
+        }
+    }
+
+    /**
+     * Helper method to handle PDF generation and Email sending in the background.
+     */
+    @Async
+    public void sendPostPaymentNotificationAsync(Bookings booking) {
+        try {
+            System.out.println("DEBUG: Starting Async Post-Payment Tasks for Booking: " + booking.getBookingId());
+            byte[] invoicePdf = pdfInvoiceGenerator.generateInvoice(booking);
+            emailService.sendBookingConfirmation(booking.getTrip().getCustomer(), booking, invoicePdf);
+            System.out.println("DEBUG: Async Post-Payment Tasks completed successfully.");
+        } catch (Exception e) {
+            System.err.println("ERROR: Async Post-payment email/PDF failed: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

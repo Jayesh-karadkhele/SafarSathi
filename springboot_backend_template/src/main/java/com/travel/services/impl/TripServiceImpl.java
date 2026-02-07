@@ -119,7 +119,12 @@ public class TripServiceImpl implements TripService {
         dto.setEndDate(trip.getEndDate());
         dto.setTripStatus(trip.getTripStatus());
         dto.setPackageTier(trip.getPackageTier());
-        dto.setPaid(trip.getBooking() != null && trip.getBooking().getBookingsStatus() == BookingStatus.CONFIRMED);
+
+        // Flag as paid if there's a confirmed booking OR if trip status is CONFIRMED
+        boolean isPaid = (trip.getBooking() != null && trip.getBooking().getBookingsStatus() == BookingStatus.CONFIRMED)
+                || (trip.getTripStatus() == TripStatus.CONFIRMED);
+        dto.setPaid(isPaid);
+
         if (trip.getBooking() != null) {
             dto.setBookingId(trip.getBooking().getBookingId());
         }
