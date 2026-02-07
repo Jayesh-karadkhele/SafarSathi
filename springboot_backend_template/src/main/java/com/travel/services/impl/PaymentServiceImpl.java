@@ -48,6 +48,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentResponse createOrder(PaymentRequest request) throws Exception {
+        System.out.println("[CREATE-ORDER] Request for user ID: " + request.getUserId());
+        System.out.println("[CREATE-ORDER] Using Razorpay Key ID: "
+                + (keyId != null && keyId.length() > 5 ? keyId.substring(0, 8) + "..." : "EMPTY"));
         RazorpayClient client = new RazorpayClient(keyId, keySecret);
 
         JSONObject orderRequest = new JSONObject();

@@ -44,7 +44,7 @@ public class Trip {
     private Double budget;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status_str", length = 50, nullable = false)
+    @Column(name = "status_str", length = 50)
     private TripStatus tripStatus;
 
     @Enumerated(EnumType.STRING)

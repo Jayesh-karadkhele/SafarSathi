@@ -81,9 +81,10 @@ public class PaymentController {
             System.out.println("DEBUG: Order created successfully: " + response);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            System.err.println("ERROR: createOrder failed: " + e.getMessage());
+            System.err.println("[CREATE-ORDER] EXCEPTION: " + e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.badRequest().body("Error creating order: " + e.getMessage());
+            return ResponseEntity.badRequest().body(
+                    Map.of("error", e.getMessage() != null ? e.getMessage() : "Unknown error during order creation"));
         }
     }
 
