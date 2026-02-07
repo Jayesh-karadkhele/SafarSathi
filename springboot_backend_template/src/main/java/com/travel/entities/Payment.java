@@ -26,6 +26,7 @@ public class Payment {
     private String currency;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status", length = 30)
     private PaymentStatus status;
 
     private LocalDateTime createdAt;
