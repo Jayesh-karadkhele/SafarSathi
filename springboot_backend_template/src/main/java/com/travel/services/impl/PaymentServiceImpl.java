@@ -99,7 +99,14 @@ public class PaymentServiceImpl implements PaymentService {
         Long tripId = Long.parseLong(tripIdStr);
 
         System.out.println("DEBUG: Verifying payment for Order ID: " + orderId + " and Trip ID: " + tripId);
-        JSONObject options = new JSONObject(data);
+
+        // 🔥 CRITICAL FIX: Only pass the 3 required fields to verifyPaymentSignature
+        // Including tripId or other custom fields will cause signature mismatch!
+        JSONObject options = new JSONObject();
+        options.put("razorpay_order_id", orderId);
+        options.put("razorpay_payment_id", paymentId);
+        options.put("razorpay_signature", signature);
+
         boolean isValid = Utils.verifyPaymentSignature(options, keySecret);
         System.out.println("DEBUG: Signature valid: " + isValid);
 
