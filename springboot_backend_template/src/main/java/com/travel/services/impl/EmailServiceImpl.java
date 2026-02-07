@@ -100,7 +100,7 @@ public class EmailServiceImpl implements EmailService {
 
             helper.setFrom(fromEmail, "SafarSaathi");
             helper.setTo(user.getEmail());
-            helper.setSubject("Welcome to SafarSaathi! 🎒");
+            helper.setSubject("Welcome to SafarSaathi!");
 
             String content = "<html>" +
                     "<body style='font-family: Arial, sans-serif; color: #333;'>" +

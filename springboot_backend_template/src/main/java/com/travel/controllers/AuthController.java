@@ -31,7 +31,7 @@ public class AuthController {
         try {
             User user = userService.loginUser(loginDto.getEmail(), loginDto.getPassword());
 
-            // 📧 Send login notification
+            // Send login notification
             emailService.sendLoginNotification(user);
 
             String role = user.getUserRole().name();
@@ -53,7 +53,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDto dto) {
-        System.out.println("DEBUG: Register request for email: " + dto.getEmail());
         try {
             User user = new User();
             user.setName(dto.getName());
@@ -63,9 +62,8 @@ public class AuthController {
             user.setUserRole(UserRole.valueOf(role.toUpperCase()));
 
             User savedUser = userService.registerUser(user);
-            System.out.println("DEBUG: User registered successfully: " + savedUser.getUserId());
 
-            // 📧 Send welcome email
+            // Send welcome email
             emailService.sendWelcomeEmail(savedUser);
 
             return ResponseEntity.ok("User registered successfully");

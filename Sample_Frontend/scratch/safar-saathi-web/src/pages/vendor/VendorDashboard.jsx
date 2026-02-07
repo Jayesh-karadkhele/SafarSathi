@@ -6,7 +6,7 @@ import { LayoutDashboard, PlusCircle, ShoppingBag, PieChart, Loader2 } from 'luc
 /* ================= OVERVIEW ================= */
 const VendorOverview = () => (
     <div className="bg-black/20 backdrop-blur-xl border border-white/10 p-10 rounded-[3rem] text-white">
-        <h3 className="text-3xl font-stylish font-black mb-4">Vendor Command Center 🚀</h3>
+        <h3 className="text-3xl font-stylish font-black mb-4">Vendor Command Center</h3>
         <p className="text-white/60 text-lg font-medium">Welcome back! Here you can craft extraordinary journeys.</p>
     </div>
 );

@@ -45,12 +45,10 @@ const PackageDetail = () => {
         };
 
         try {
-            // 1. Create Trip (Scheduled)
             const tripResponse = await api.post(`/trips/${user.userId}?packageId=${pkg.packageId}`, tripPayload);
             const createdTrip = tripResponse.data;
             const tripId = createdTrip.tripId;
 
-            // 2. Create Razorpay Order
             const orderResponse = await api.post('/payments/create-order', {
                 amount: price,
                 userId: user.userId
@@ -58,7 +56,6 @@ const PackageDetail = () => {
 
             const { razorpayOrderId, amount, currency, keyId } = orderResponse.data;
 
-            // 3. Open Razorpay Checkout
             const options = {
                 key: keyId,
                 amount: amount,
@@ -68,18 +65,16 @@ const PackageDetail = () => {
                 order_id: razorpayOrderId,
                 handler: async function (response) {
                     try {
-                        // 4. Verify Payment & Confirm Booking
                         await api.post('/payments/verify-payment', {
                             razorpay_order_id: response.razorpay_order_id,
                             razorpay_payment_id: response.razorpay_payment_id,
                             razorpay_signature: response.razorpay_signature,
-                            tripId: tripId.toString() // Link payment to this Trip
+                            tripId: tripId.toString()
                         });
 
                         alert("Payment Successful! Your trip is booked.");
                         navigate('/customer/my-bookings');
                     } catch (verifyError) {
-                        console.error("Verification failed:", verifyError);
                         const errorMessage = verifyError.response?.data?.message || "Payment verification failed.";
                         alert(errorMessage);
                     }
@@ -101,7 +96,6 @@ const PackageDetail = () => {
             rzp.open();
 
         } catch (error) {
-            console.error("Booking initialization failed:", error);
             alert("Could not start booking process. Please try again.");
         } finally {
             setBookingLoading(false);

@@ -48,9 +48,6 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentResponse createOrder(PaymentRequest request) throws Exception {
-        System.out.println("[CREATE-ORDER] Request for user ID: " + request.getUserId());
-        System.out.println("[CREATE-ORDER] Using Razorpay Key ID: "
-                + (keyId != null && keyId.length() > 5 ? keyId.substring(0, 8) + "..." : "EMPTY"));
         RazorpayClient client = new RazorpayClient(keyId, keySecret);
 
         JSONObject orderRequest = new JSONObject();
@@ -88,7 +85,6 @@ public class PaymentServiceImpl implements PaymentService {
         String paymentId = data.get("razorpay_payment_id");
         String signature = data.get("razorpay_signature");
 
-        // SAFAR-SAATHI FIX: Retrieve Trip ID to link booking
         String tripIdStr = data.get("tripId");
         if (tripIdStr == null || tripIdStr.isEmpty() || tripIdStr.equals("undefined")) {
             System.err.println("ERROR: Trip ID missing in payment verification data: " + data);
@@ -96,17 +92,12 @@ public class PaymentServiceImpl implements PaymentService {
         }
         Long tripId = Long.parseLong(tripIdStr);
 
-        System.out.println("DEBUG: Verifying payment for Order ID: " + orderId + " and Trip ID: " + tripId);
-
-        // 🔥 CRITICAL FIX: Only pass the 3 required fields to verifyPaymentSignature
-        // Including tripId or other custom fields will cause signature mismatch!
         JSONObject options = new JSONObject();
         options.put("razorpay_order_id", orderId);
         options.put("razorpay_payment_id", paymentId);
         options.put("razorpay_signature", signature);
 
         boolean isValid = Utils.verifyPaymentSignature(options, keySecret);
-        System.out.println("DEBUG: Signature valid: " + isValid);
 
         if (isValid) {
             Payment payment = paymentRepository.findByRazorpayOrderId(orderId)
@@ -129,23 +120,18 @@ public class PaymentServiceImpl implements PaymentService {
 
             Bookings savedBooking = bookingRepository.save(booking);
 
-            // 5. Link Payment to Booking
             payment.setBooking(savedBooking);
-            // 6. Update Trip Status to CONFIRMED for clear "PAID" status
             trip.setTripStatus(TripStatus.CONFIRMED);
             tripRepository.save(trip);
             paymentRepository.save(payment);
 
-            // 🚀 7. TRULY ASYNC POST-PAYMENT TASKS (Failsafe)
             try {
                 postPaymentService.sendPostPaymentNotificationAsync(savedBooking);
             } catch (Exception e) {
-                System.err.println("[BACKEND] Post-payment tasks failed to start: " + e.getMessage());
             }
 
             return true;
         } else {
-            System.out.println("DEBUG: Signature verification failed.");
             Payment payment = paymentRepository.findByRazorpayOrderId(orderId).orElse(null);
             if (payment != null) {
                 payment.setStatus(PaymentStatus.FAILED);

@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// 1. IMPORT THIS
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -59,22 +58,18 @@ public class Trip {
     @JoinColumn(name = "package_id", nullable = true)
     private Packages selectedPackage;
 
-    // 👇 SAFETY FIX 1: Add @JsonIgnore
     @OneToOne(mappedBy = "trip", cascade = CascadeType.ALL)
     @JsonIgnore
     private Bookings booking;
 
-    // 👇 SAFETY FIX 2: Add @JsonIgnore
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Transportation> transportations = new ArrayList<>();
 
-    // 👇 SAFETY FIX 3: Add @JsonIgnore
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Accommodation> accommodations = new ArrayList<>();
 
-    // 👇 SAFETY FIX 4: Add @JsonIgnore
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Destinations> destinations = new ArrayList<>();

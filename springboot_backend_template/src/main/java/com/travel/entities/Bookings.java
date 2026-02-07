@@ -17,7 +17,6 @@ public class Bookings {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long bookingId;
 
-	// FIX: OneToOne mapping back to Trip
 	@OneToOne
 	@JoinColumn(name = "trip_id")
 	private Trip trip;

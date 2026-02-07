@@ -75,10 +75,8 @@ public class PaymentController {
 
     @PostMapping("/create-order")
     public ResponseEntity<?> createOrder(@RequestBody PaymentRequest request) {
-        System.out.println("DEBUG: createOrder called with payload: " + request);
         try {
             PaymentResponse response = paymentService.createOrder(request);
-            System.out.println("DEBUG: Order created successfully: " + response);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             System.err.println("[CREATE-ORDER] EXCEPTION: " + e.getMessage());
@@ -90,19 +88,14 @@ public class PaymentController {
 
     @PostMapping("/verify-payment")
     public ResponseEntity<?> verifyPayment(@RequestBody Map<String, String> data) {
-        System.out.println("[VERIFY-PAYMENT] Payload received: " + data);
         try {
             boolean isValid = paymentService.verifyPayment(data);
             if (isValid) {
-                System.out.println("[VERIFY-PAYMENT] Verification SUCCESS");
                 return ResponseEntity.ok(Map.of("status", "success", "message", "Payment verified successfully"));
             } else {
-                System.err.println("[VERIFY-PAYMENT] Verification FAILED: Invalid Signature");
                 return ResponseEntity.badRequest().body(Map.of("status", "error", "message", "Invalid signature"));
             }
         } catch (Exception e) {
-            System.err.println("[VERIFY-PAYMENT] EXCEPTION during verification: " + e.getMessage());
-            e.printStackTrace();
             return ResponseEntity.badRequest().body(Map.of("status", "error", "message",
                     e.getMessage() != null ? e.getMessage() : "Unknown error during verification"));
         }

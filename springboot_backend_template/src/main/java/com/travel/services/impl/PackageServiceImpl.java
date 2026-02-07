@@ -42,12 +42,9 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     public PackageDto createPackage(Packages pkg, Long vendorId) {
-        System.out.println("DEBUG: Creating Package for Vendor ID: " + vendorId);
 
         User vendor = userRepo.findById(vendorId)
                 .orElseThrow(() -> new RuntimeException("Vendor not found with ID: " + vendorId));
-
-        System.out.println("DEBUG: Found User: " + vendor.getName() + " with Role: " + vendor.getUserRole());
 
         if (vendor.getUserRole() != UserRole.VENDOR) {
             throw new RuntimeException("Access Denied: Only users with VENDOR role can create packages. Current role: "
@@ -56,8 +53,6 @@ public class PackageServiceImpl implements PackageService {
 
         pkg.setVendor(vendor);
         Packages savedPkg = packageRepo.save(pkg);
-
-        System.out.println("DEBUG: Package created and saved with ID: " + savedPkg.getPackageId());
 
         return mapToDto(savedPkg);
     }

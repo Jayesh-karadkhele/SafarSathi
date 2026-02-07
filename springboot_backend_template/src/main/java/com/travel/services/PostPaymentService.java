@@ -19,13 +19,9 @@ public class PostPaymentService {
     @Async
     public void sendPostPaymentNotificationAsync(Bookings booking) {
         try {
-            System.out.println("[POST-PAYMENT] Starting background tasks for Booking ID: " + booking.getBookingId());
             byte[] invoicePdf = pdfInvoiceGenerator.generateInvoice(booking);
             emailService.sendBookingConfirmation(booking.getTrip().getCustomer(), booking, invoicePdf);
-            System.out.println("[POST-PAYMENT] Background tasks completed successfully.");
         } catch (Exception e) {
-            System.err.println("[POST-PAYMENT] ERROR in background tasks: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 }

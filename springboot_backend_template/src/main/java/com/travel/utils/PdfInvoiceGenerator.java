@@ -53,7 +53,6 @@ public class PdfInvoiceGenerator {
 
             document.close();
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return out.toByteArray();
     }

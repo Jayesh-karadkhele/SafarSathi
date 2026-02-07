@@ -48,7 +48,7 @@ export default function Register() {
             >
                 {!success ? (
                     <>
-                        <h2 style={title}>Create Account 🎒</h2>
+                        <h2 style={title}>Create Account</h2>
                         <p style={subtitle}>Join Safarsathi and start your journey</p>
 
                         {/* Role Selector */}

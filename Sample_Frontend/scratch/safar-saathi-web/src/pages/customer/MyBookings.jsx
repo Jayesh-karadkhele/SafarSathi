@@ -19,7 +19,6 @@ const MyBookings = ({ bookings, refresh }) => {
             link.click();
             link.remove();
         } catch (err) {
-            console.error("Download Error:", err);
             alert("Error downloading invoice. Please try again later.");
         }
     };
@@ -27,18 +26,13 @@ const MyBookings = ({ bookings, refresh }) => {
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to cancel this booking?")) {
             try {
-                // 1. Backend Call
                 await api.delete(`/trips/${id}`);
 
-                // 2. Local feedback
                 alert("Trip cancelled successfully.");
 
-                // 3. Trigger parent refresh to update UI and Overview count
                 refresh();
             } catch (err) {
-                console.error("Delete Error:", err);
                 alert("Error cancelling trip. It might have been already removed.");
-                // Refresh anyway to clear any 'ghost' data
                 refresh();
             }
         }

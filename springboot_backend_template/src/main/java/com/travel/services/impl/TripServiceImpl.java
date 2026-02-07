@@ -95,12 +95,10 @@ public class TripServiceImpl implements TripService {
 
     @Override
     public void deleteTrip(Long tripId) {
-        System.out.println("DEBUG: Attempting to delete Trip with ID: " + tripId);
         Trip trip = tripRepository.findById(tripId)
                 .orElseThrow(() -> new RuntimeException("Cannot delete: Trip not found with ID: " + tripId));
         try {
             tripRepository.delete(trip);
-            System.out.println("DEBUG: Trip " + tripId + " deleted successfully.");
         } catch (Exception e) {
             throw new RuntimeException("Database error during deletion: " + e.getMessage());
         }
