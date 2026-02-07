@@ -22,7 +22,6 @@ const PackageDetail = () => {
             const response = await api.get(`/packages/${id}`);
             setPkg(response.data);
         } catch (error) {
-            console.error("Error fetching package:", error);
         } finally {
             setLoading(false);
         }
@@ -148,7 +147,6 @@ const PackageDetail = () => {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Hero Section */}
             <div className="relative h-[55vh] overflow-hidden">
                 <img
                     src={pkg.imageUrl || "https://images.unsplash.com/photo-1501785888041-af3ef285b470"}
@@ -193,10 +191,8 @@ const PackageDetail = () => {
                 </div>
             </div>
 
-            {/* Content Section */}
             <div className="max-w-7xl mx-auto px-6 py-16">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                    {/* Info & Details */}
                     <div className="lg:col-span-2 space-y-10">
                         <section className="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100">
                             <h2 className="text-2xl font-black text-gray-800 mb-6 flex items-center gap-3">
@@ -238,7 +234,6 @@ const PackageDetail = () => {
                         </section>
                     </div>
 
-                    {/* Booking Tiers Sidebar */}
                     <div className="lg:sticky lg:top-24 h-fit">
                         <div className="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
                             <h2 className="text-xl font-black text-gray-800 mb-6 text-center uppercase tracking-widest">Pricing Options</h2>

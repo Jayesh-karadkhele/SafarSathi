@@ -51,7 +51,7 @@ public class PaymentServiceImpl implements PaymentService {
         RazorpayClient client = new RazorpayClient(keyId, keySecret);
 
         JSONObject orderRequest = new JSONObject();
-        orderRequest.put("amount", (int) (request.getAmount() * 100)); // amount in paise
+        orderRequest.put("amount", (int) (request.getAmount() * 100));
         orderRequest.put("currency", "INR");
         orderRequest.put("receipt", "txn_" + System.currentTimeMillis());
 
@@ -87,7 +87,6 @@ public class PaymentServiceImpl implements PaymentService {
 
         String tripIdStr = data.get("tripId");
         if (tripIdStr == null || tripIdStr.isEmpty() || tripIdStr.equals("undefined")) {
-            System.err.println("ERROR: Trip ID missing in payment verification data: " + data);
             throw new RuntimeException("Trip ID is missing. Cannot verify payment.");
         }
         Long tripId = Long.parseLong(tripIdStr);
@@ -103,16 +102,13 @@ public class PaymentServiceImpl implements PaymentService {
             Payment payment = paymentRepository.findByRazorpayOrderId(orderId)
                     .orElseThrow(() -> new RuntimeException("Order not found with ID: " + orderId));
 
-            // 1. Update Payment
             payment.setRazorpayPaymentId(paymentId);
             payment.setRazorpaySignature(signature);
             payment.setStatus(PaymentStatus.COMPLETED);
 
-            // 2. Fetch Trip
             Trip trip = tripRepository.findById(tripId)
                     .orElseThrow(() -> new RuntimeException("Trip not found with ID: " + tripId));
 
-            // 3. Create & Link Booking
             Bookings booking = new Bookings();
             booking.setTrip(trip);
             booking.setBookingDate(LocalDate.now());

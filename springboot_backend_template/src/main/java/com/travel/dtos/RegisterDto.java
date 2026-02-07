@@ -9,6 +9,5 @@ public class RegisterDto {
     private String email;
     private String password;
 
-    // Must match enum values: CUSTOMER / VENDOR / ADMIN
     private String userRole;
 }

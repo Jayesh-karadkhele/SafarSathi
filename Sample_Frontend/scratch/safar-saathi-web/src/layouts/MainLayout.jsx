@@ -9,7 +9,6 @@ const MainLayout = () => {
     const isHome = location.pathname === '/';
     const isAuth = location.pathname === '/login' || location.pathname === '/register';
 
-    // Premium background images for specific sections
     const getBgImage = () => {
         if (isAuth) return "url(https://images.unsplash.com/photo-1488646953014-85cb44e25828)";
         return "url(https://images.unsplash.com/photo-1499591934245-40b55745b905)";
@@ -17,7 +16,6 @@ const MainLayout = () => {
 
     return (
         <div className="min-h-screen relative flex flex-col font-sans selection:bg-blue-600 selection:text-white">
-            {/* Global Background Layer */}
             {!isHome && !isAuth && (
                 <div className="fixed inset-0 z-[-1] overflow-hidden">
                     <div

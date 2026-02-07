@@ -14,7 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString(exclude = "trips") // Good practice to exclude lists from ToString to avoid recursion
+@ToString(exclude = "trips")
 public class Packages {
 
     @Id
@@ -31,19 +31,16 @@ public class Packages {
     private String imageUrl;
 
     @Column(length = 2000)
-    private String highlights; // Example: "Breakfast, WiFi, Pool, Guided Tour"
+    private String highlights;
 
-    private String restaurants; // Example: "Ocean Blue, Spicy Garden, The Terrace"
+    private String restaurants;
 
     @ManyToOne
     @JoinColumn(name = "vendor_id")
     @JsonIgnore
     private User vendor;
 
-    // --- UPDATED RELATIONSHIP ---
-    @OneToMany(mappedBy = "selectedPackage", cascade = CascadeType.ALL, // 👈 Fixes the MySQL Error 1451
-            orphanRemoval = true // 👈 Cleans up trips that no longer have a package
-    )
+    @OneToMany(mappedBy = "selectedPackage", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Trip> trips = new ArrayList<>();
 }

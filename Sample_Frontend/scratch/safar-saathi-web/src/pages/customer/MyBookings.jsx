@@ -60,7 +60,6 @@ const MyBookings = ({ bookings, refresh }) => {
                     {bookings.map((trip) => (
                         <div key={trip.tripId} className="bg-white border border-gray-100 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row justify-between items-start md:items-center group">
 
-                            {/* Trip Info Section */}
                             <div className="space-y-4">
                                 <div>
                                     <span className={`px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase ${trip.tripStatus === 'SCHEDULED' ? 'bg-blue-100 text-blue-700' :
@@ -93,7 +92,6 @@ const MyBookings = ({ bookings, refresh }) => {
                                 </div>
                             </div>
 
-                            {/* Actions Section */}
                             <div className="mt-6 md:mt-0 flex items-center gap-4 w-full md:w-auto border-t md:border-t-0 pt-4 md:pt-0">
                                 {trip.paid && trip.bookingId && (
                                     <button

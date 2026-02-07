@@ -8,15 +8,13 @@ const CustomerDashboard = () => {
     const { user, logout } = useAuth();
     const [bookings, setBookings] = useState([]);
 
-    // ✅ Centralized fetch function
     const loadBookings = () => {
         if (user?.userId) {
             api.get(`/trips/customer/${user.userId}`)
                 .then(res => {
-                    console.log("Trips loaded:", res.data);
                     setBookings(res.data);
                 })
-                .catch(err => console.error("Dashboard Fetch Error:", err));
+                .catch(err => { });
         }
     };
 
@@ -26,7 +24,6 @@ const CustomerDashboard = () => {
 
     return (
         <div className="flex min-h-screen bg-gray-100">
-            {/* Sidebar */}
             <aside className="w-64 bg-white border-r p-6 shadow-sm">
                 <div className="mb-8">
                     <h2 className="text-xl font-black text-blue-600">Safar-Saathi</h2>
@@ -43,7 +40,6 @@ const CustomerDashboard = () => {
                 </nav>
             </aside>
 
-            {/* Main Content */}
             <main className="flex-1 p-10">
                 <Routes>
                     <Route index element={
@@ -55,7 +51,6 @@ const CustomerDashboard = () => {
                         </div>
                     } />
 
-                    {/* ✅ PROPS FIXED: Using 'refresh' to match MyBookings expectations */}
                     <Route path="my-bookings" element={
                         <MyBookings bookings={bookings} refresh={loadBookings} />
                     } />

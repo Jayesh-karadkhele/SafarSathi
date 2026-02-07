@@ -31,7 +31,6 @@ public class AuthController {
         try {
             User user = userService.loginUser(loginDto.getEmail(), loginDto.getPassword());
 
-            // Send login notification
             emailService.sendLoginNotification(user);
 
             String role = user.getUserRole().name();
@@ -46,7 +45,7 @@ public class AuthController {
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
     }
@@ -63,13 +62,10 @@ public class AuthController {
 
             User savedUser = userService.registerUser(user);
 
-            // Send welcome email
             emailService.sendWelcomeEmail(savedUser);
 
             return ResponseEntity.ok("User registered successfully");
         } catch (Exception e) {
-            System.err.println("ERROR during registration: " + e.getMessage());
-            e.printStackTrace();
             return ResponseEntity.badRequest().body(
                     Map.of("message", e.getMessage() != null ? e.getMessage() : "Unknown error during registration"));
         }

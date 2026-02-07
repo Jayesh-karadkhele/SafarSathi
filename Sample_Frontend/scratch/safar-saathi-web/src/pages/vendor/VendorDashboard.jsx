@@ -3,7 +3,6 @@ import { Routes, Route, Link, Outlet } from 'react-router-dom';
 import api from '../../api/axios';
 import { LayoutDashboard, PlusCircle, ShoppingBag, PieChart, Loader2 } from 'lucide-react';
 
-/* ================= OVERVIEW ================= */
 const VendorOverview = () => (
     <div className="bg-black/20 backdrop-blur-xl border border-white/10 p-10 rounded-[3rem] text-white">
         <h3 className="text-3xl font-stylish font-black mb-4">Vendor Command Center</h3>
@@ -11,7 +10,6 @@ const VendorOverview = () => (
     </div>
 );
 
-/* ================= CREATE PACKAGE ================= */
 const CreatePackage = () => {
     const [loading, setLoading] = useState(false);
     const [pkg, setPkg] = useState({
@@ -34,16 +32,12 @@ const CreatePackage = () => {
         const vendorId = localStorage.getItem("userId");
         const payload = { ...pkg, price: Number(pkg.price) };
 
-        console.log("SENDING TO:", `/packages/${vendorId}`);
-        console.log("PAYLOAD:", payload);
 
         try {
             const resp = await api.post(`/packages/${vendorId}`, payload);
-            console.log("SUCCESS:", resp.data);
-            alert("✅ Package created!");
+            alert("Package created!");
             setPkg({ packageName: '', description: '', price: '', imageUrl: '', highlights: '', restaurants: '' });
         } catch (err) {
-            console.error("FAILED:", err.response?.data || err.message);
             alert("Failed: " + JSON.stringify(err.response?.data || err.message));
         } finally {
             setLoading(false);
@@ -68,7 +62,6 @@ const CreatePackage = () => {
     );
 };
 
-/* ================= LAYOUT ================= */
 const VendorDashboardLayout = () => (
     <div className="flex min-h-screen bg-gray-100">
         <aside className="w-64 bg-white shadow-lg p-6">
@@ -83,7 +76,6 @@ const VendorDashboardLayout = () => (
     </div>
 );
 
-/* ================= ROUTES ================= */
 const VendorDashboard = () => (
     <Routes>
         <Route element={<VendorDashboardLayout />}>

@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 const AddTrip = () => {
     const navigate = useNavigate();
 
-    // 1. State for form data and loading status
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         packageName: '',
@@ -22,32 +21,29 @@ const AddTrip = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Basic Validation
         if (!formData.vendorId) {
             alert("Please enter a Vendor ID (Check User Management for your ID)");
             return;
         }
 
-        setLoading(true); // 👈 Start loading spinner effect
+        setLoading(true);
 
         try {
-            // URL: http://localhost:8080/api/packages/{vendorId}
             await api.post(`/packages/${formData.vendorId}`, {
                 packageName: formData.packageName,
                 description: formData.description,
-                price: parseFloat(formData.price), // Ensure it's a number for Java Double
+                price: parseFloat(formData.price),
                 imageUrl: formData.imageUrl
             });
 
-            alert('Trip Package Published Successfully! ✈️');
-            navigate('/admin/packages'); // Redirect to list view
+            alert('Trip Package Published Successfully!');
+            navigate('/admin/packages');
 
         } catch (error) {
             const errorMsg = error.response ? error.response.data : error.message;
-            console.error("400 Error details:", errorMsg);
             alert(`Failed to add trip: ${errorMsg}`);
         } finally {
-            setLoading(false); // 👈 Stop loading regardless of result
+            setLoading(false);
         }
     };
 
@@ -64,7 +60,6 @@ const AddTrip = () => {
 
             <form onSubmit={handleSubmit} className="space-y-5">
 
-                {/* Package Name */}
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1">Package Name</label>
                     <input
@@ -78,7 +73,6 @@ const AddTrip = () => {
                     />
                 </div>
 
-                {/* Description */}
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1">Description</label>
                     <textarea
@@ -93,7 +87,6 @@ const AddTrip = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Price */}
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-1">Price (₹)</label>
                         <input
@@ -107,7 +100,6 @@ const AddTrip = () => {
                         />
                     </div>
 
-                    {/* Vendor ID */}
                     <div>
                         <label className="block text-sm font-semibold text-gray-700 mb-1">Vendor ID</label>
                         <input
@@ -122,7 +114,6 @@ const AddTrip = () => {
                     </div>
                 </div>
 
-                {/* Image URL */}
                 <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1">Image Link (URL)</label>
                     <input
@@ -137,14 +128,13 @@ const AddTrip = () => {
                     <p className="text-xs text-gray-500 mt-1 italic">Use direct links for best results.</p>
                 </div>
 
-                {/* Submit Button */}
                 <div className="pt-4">
                     <button
                         type="submit"
                         disabled={loading}
                         className={`w-full flex justify-center items-center font-bold py-3 px-4 rounded-md shadow transition duration-200 ${loading
-                                ? 'bg-blue-300 cursor-not-allowed'
-                                : 'bg-blue-600 hover:bg-blue-700 text-white active:transform active:scale-95'
+                            ? 'bg-blue-300 cursor-not-allowed'
+                            : 'bg-blue-600 hover:bg-blue-700 text-white active:transform active:scale-95'
                             }`}
                     >
                         {loading ? (

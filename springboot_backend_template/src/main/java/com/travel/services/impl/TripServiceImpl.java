@@ -44,7 +44,6 @@ public class TripServiceImpl implements TripService {
 
             if (trip.getTripName() == null)
                 trip.setTripName(pkg.getPackageName());
-            // Budget might be set by Tier in frontend, so we don't overwrite if provided
             if (trip.getBudget() == null)
                 trip.setBudget(pkg.getPrice());
         }
@@ -118,7 +117,6 @@ public class TripServiceImpl implements TripService {
         dto.setTripStatus(trip.getTripStatus());
         dto.setPackageTier(trip.getPackageTier());
 
-        // Flag as paid if there's a confirmed booking OR if trip status is CONFIRMED
         boolean isPaid = (trip.getBooking() != null && trip.getBooking().getBookingsStatus() == BookingStatus.CONFIRMED)
                 || (trip.getTripStatus() == TripStatus.CONFIRMED);
         dto.setPaid(isPaid);

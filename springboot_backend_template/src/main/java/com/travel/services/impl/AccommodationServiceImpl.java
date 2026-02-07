@@ -14,20 +14,17 @@ public class AccommodationServiceImpl implements AccommodationService {
 
     @Autowired
     private AccommodationRepository accommodationRepo;
-    
+
     @Autowired
     private TripRepository tripRepo;
 
     @Override
     public Accommodation addAccommodation(Accommodation acc, Long tripId) {
-        // 1. Find the Trip
         Trip trip = tripRepo.findById(tripId)
                 .orElseThrow(() -> new RuntimeException("Trip not found"));
-        
-        // 2. Link Accommodation to Trip
+
         acc.setTrip(trip);
-        
-        // 3. Save (This will work now because the return types match)
+
         return accommodationRepo.save(acc);
     }
 }

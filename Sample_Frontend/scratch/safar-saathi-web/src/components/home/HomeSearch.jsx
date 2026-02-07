@@ -7,7 +7,6 @@ const HomeSearch = () => {
     const [activeTab, setActiveTab] = useState('Flights');
     const navigate = useNavigate();
 
-    // Search States
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -44,7 +43,6 @@ const HomeSearch = () => {
             setResults(response.data);
             setShowDropdown(true);
         } catch (error) {
-            console.error("Error searching packages:", error);
         } finally {
             setIsSearching(false);
         }
@@ -68,7 +66,6 @@ const HomeSearch = () => {
                             <span className="text-xs text-gray-500 truncate block w-full">DEL, Delhi Airport India</span>
                         </div>
 
-                        {/* SEARCHABLE 'TO' FIELD */}
                         <div className="p-4 hover:bg-blue-50 cursor-pointer border-r relative group transition-all md:col-span-2">
                             <span className="text-xs text-gray-500 font-bold uppercase block mb-1">To</span>
                             <input
@@ -85,7 +82,6 @@ const HomeSearch = () => {
                                 {query ? "Searching for " + query : "Search for places, hotels..."}
                             </span>
 
-                            {/* DROPDOWN RESULTS */}
                             {showDropdown && results.length > 0 && (
                                 <div className="absolute top-full left-0 w-[400px] bg-white shadow-2xl rounded-xl mt-2 border border-gray-100 overflow-hidden z-[100] max-h-[400px] overflow-y-auto">
                                     <div className="bg-gray-50 px-4 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider">
@@ -133,7 +129,6 @@ const HomeSearch = () => {
                     </div>
                 );
 
-            // (Keeping other cases simple for now, can perform similar updates if requested)
             default:
                 return (
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-0 box-border border rounded-xl overflow-hidden shadow-sm">
@@ -149,8 +144,7 @@ const HomeSearch = () => {
 
     return (
         <div className="max-w-7xl mx-auto px-4 -mt-24 relative z-20">
-            <div className="bg-white rounded-xl shadow-2xl overflow-visible"> {/* overflow-visible for dropdown */}
-                {/* Tabs */}
+            <div className="bg-white rounded-xl shadow-2xl overflow-visible">
                 <div className="flex justify-between items-center px-4 py-2 border-b bg-white overflow-x-auto scrollbar-hide rounded-t-xl">
                     {tabs.map((tab) => (
                         <button
@@ -169,7 +163,6 @@ const HomeSearch = () => {
                     ))}
                 </div>
 
-                {/* Search Form */}
                 <div className="p-8 pb-12 relative z-10">
                     <div className="mb-8 relative z-20">
                         {renderSearchFields()}
@@ -177,7 +170,6 @@ const HomeSearch = () => {
 
                     <div className="flex flex-wrap justify-between items-center gap-6">
                         <div className="flex gap-4">
-                            {/* Only show trip type for Flights */}
                             {(activeTab === 'Flights' || activeTab === 'Charter Flights') && (
                                 <>
                                     <div className="flex items-center gap-2">
@@ -192,7 +184,6 @@ const HomeSearch = () => {
                             )}
                         </div>
 
-                        {/* Centered Search Button */}
                         <div className="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-1/2 z-10">
                             <button
                                 onClick={() => navigate('/packages')}

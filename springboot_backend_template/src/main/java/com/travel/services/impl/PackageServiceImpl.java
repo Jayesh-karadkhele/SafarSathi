@@ -22,7 +22,6 @@ public class PackageServiceImpl implements PackageService {
     @Autowired
     private UserRepository userRepo;
 
-    // --- Helper: Convert Entity to DTO ---
     private PackageDto mapToDto(Packages pkg) {
         PackageDto dto = new PackageDto();
         dto.setPackageId(pkg.getPackageId());

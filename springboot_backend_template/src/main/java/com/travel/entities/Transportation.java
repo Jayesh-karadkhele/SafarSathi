@@ -18,41 +18,30 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name="transportation")
+@Table(name = "transportation")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 
-
-//Transportation:trans_id (PK),trip_id (FK),type (String: "Flight", "Train"),
-//details (String: "Flight AI-202, Seat 4A, 10:00 AM"),price (Decimal)
-//time
-
-
 public class Transportation {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
-	private Long transId;
-    //private Long tripId;
-	
-	@ManyToOne
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    private Long transId;
+
+    @ManyToOne
     @JoinColumn(name = "trip_id")
     private Trip trip;
-    
+
     private String transportName;
-    
+
     private Double price;
     private LocalDateTime departureTime;
-    
+
     @Enumerated(EnumType.STRING)
     private TransportType transportType;
-	
-	
-	
-	
 
 }

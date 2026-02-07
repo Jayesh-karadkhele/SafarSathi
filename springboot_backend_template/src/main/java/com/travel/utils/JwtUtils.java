@@ -11,17 +11,16 @@ import java.util.Date;
 @Component
 public class JwtUtils {
 
-    // Generates a secure key automatically
     private final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private final int jwtExpirationMs = 86400000; // 24 hours
+    private final int jwtExpirationMs = 86400000;
 
     public String generateToken(String email, String role) {
         return Jwts.builder()
                 .setSubject(email)
-                .claim("role", role) // This stores VENDOR or CUSTOMER
+                .claim("role", role)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(key) 
+                .signWith(key)
                 .compact();
     }
 }

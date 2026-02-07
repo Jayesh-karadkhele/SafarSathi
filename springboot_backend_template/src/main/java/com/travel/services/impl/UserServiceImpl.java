@@ -15,7 +15,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUser(User user) {
-        // Ensure email and password are trimmed before saving
         if (user.getEmail() != null)
             user.setEmail(user.getEmail().trim());
         if (user.getPassword() != null)

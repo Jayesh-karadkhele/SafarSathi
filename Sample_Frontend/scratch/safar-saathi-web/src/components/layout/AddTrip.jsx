@@ -19,12 +19,10 @@ const AddTrip = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Adjust this URL to match your @RequestMapping for PackagesController
             await api.post('/packages', pkg);
             alert("Package added successfully!");
-            navigate('/admin'); // Redirect back to the dashboard
+            navigate('/admin');
         } catch (error) {
-            console.error("Error adding package:", error);
             alert("Failed to add package.");
         }
     };

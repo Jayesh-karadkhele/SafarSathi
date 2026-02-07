@@ -8,15 +8,11 @@ export default function Home() {
 
     return (
         <div className="bg-gray-50 min-h-screen">
-            {/* Scroll-based Hero Animation */}
             <ScrollScenery />
 
-            {/* Search Widget */}
             <HomeSearch />
 
-            {/* Promotional Content */}
             <div className="relative py-24 overflow-hidden">
-                {/* Background Image with Parallax-like effect */}
                 <div className="absolute inset-0">
                     <img
                         src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop"
@@ -72,7 +68,6 @@ export default function Home() {
 }
 
 
-/* ================= STYLES ================= */
 
 const container = {
     minHeight: "100vh",
@@ -83,7 +78,7 @@ const container = {
     backgroundPosition: "center",
     position: "relative",
     overflow: "hidden",
-    paddingTop: "70px", // ✅ exact height of navbar, removes any top gap
+    paddingTop: "70px",
 };
 
 const overlay = {

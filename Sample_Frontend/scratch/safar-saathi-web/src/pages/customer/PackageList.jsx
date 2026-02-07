@@ -19,7 +19,6 @@ const PackageList = () => {
             const result = await api.get('/packages');
             setPackages(result.data);
         } catch (error) {
-            console.error("Error loading packages:", error);
         } finally {
             setLoading(false);
         }

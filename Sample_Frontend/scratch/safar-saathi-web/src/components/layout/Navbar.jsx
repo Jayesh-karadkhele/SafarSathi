@@ -47,7 +47,6 @@ const Navbar = () => {
         transition: "all 0.3s ease",
       }}
     >
-      {/* Logo */}
       <Link to="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "10px" }}>
         <div style={{
           color: isScrolled ? "#008cff" : "white",
@@ -58,11 +57,9 @@ const Navbar = () => {
           alignItems: "center"
         }}>
           Safar<span style={{ color: isScrolled ? "#005eff" : "#60a5fa" }}>Saathi</span>
-          <span className="ml-2 text-2xl">🌍</span>
         </div>
       </Link>
 
-      {/* Desktop Navigation */}
       <div className="hidden md:flex" style={{ alignItems: "center", gap: "40px" }}>
         <div style={{ display: "flex", gap: "30px" }}>
           {navLinks.map((link) => (
@@ -100,7 +97,6 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Auth Section */}
         {!user ? (
           <div style={{ display: "flex", gap: "25px", alignItems: "center" }}>
             <Link
@@ -156,7 +152,6 @@ const Navbar = () => {
       </div>
 
 
-      {/* Mobile Menu Button */}
       <button
         className="md:hidden"
         style={{
@@ -170,7 +165,6 @@ const Navbar = () => {
         {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
       </button>
 
-      {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
         <div
           className="md:hidden"

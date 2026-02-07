@@ -19,7 +19,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Protected Customer Routes */}
         <Route
           path="/customer/*"
           element={
@@ -29,7 +28,6 @@ function App() {
           }
         />
 
-        {/* Protected Vendor Routes */}
         <Route
           path="/vendor/*"
           element={

@@ -13,8 +13,6 @@ public class TransportationController {
     @Autowired
     private TransportationService transportService;
 
-    // POST: Add Transport to a Trip
-    // URL: http://localhost:8080/api/transportation/1 (where 1 is tripId)
     @PostMapping("/{tripId}")
     public ResponseEntity<?> addTransport(@RequestBody Transportation transport, @PathVariable Long tripId) {
         try {

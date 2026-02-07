@@ -7,10 +7,9 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  // Form State
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userRole, setUserRole] = useState("CUSTOMER"); // Default login role
+  const [userRole, setUserRole] = useState("CUSTOMER");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -28,15 +27,12 @@ export default function Login() {
         throw new Error("Invalid email or password");
       }
 
-      // Check if the user is logging into the correct portal
       if (result.userRole !== userRole) {
         throw new Error(`This account is registered as ${result.userRole}. Please switch tab.`);
       }
 
-      // Show success animation
       setSuccess(true);
 
-      // Navigate after a short delay to let animation play
       setTimeout(() => {
         if (result.userRole === 'VENDOR') {
           navigate("/vendor");
@@ -64,29 +60,26 @@ export default function Login() {
       >
         {!success ? (
           <>
-            <h2 style={title}>Welcome Back ✈️</h2>
+            <h2 style={title}>Welcome Back</h2>
             <p style={subtitle}>Continue your Safar with us</p>
 
-            {/* Role Selector */}
             <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
               <div
                 style={userRole === 'CUSTOMER' ? activeRoleBtn : roleBtn}
                 onClick={() => setUserRole('CUSTOMER')}
               >
-                👤 Customer
+                Customer
               </div>
               <div
                 style={userRole === 'VENDOR' ? activeRoleBtn : roleBtn}
                 onClick={() => setUserRole('VENDOR')}
               >
-                🏨 Vendor
+                Vendor
               </div>
             </div>
 
-            {/* Error Message */}
             {error && <p style={errorStyle}>{error}</p>}
 
-            {/* Email */}
             <div style={field}>
               <input
                 required
@@ -98,7 +91,6 @@ export default function Login() {
               <label style={email ? { ...label, ...activeLabel } : label}>Email</label>
             </div>
 
-            {/* Password */}
             <div style={field}>
               <input
                 type={showPassword ? "text" : "password"}
@@ -113,11 +105,10 @@ export default function Login() {
                 style={eye}
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? "🙈" : "👁️"}
+                {showPassword ? "Hide" : "Show"}
               </span>
             </div>
 
-            {/* Login Button */}
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -128,15 +119,13 @@ export default function Login() {
               {loading ? "Logging in..." : "Login"}
             </motion.button>
 
-            {/* Divider */}
             <div style={divider}>OR</div>
 
-            {/* Google Button */}
             <motion.button
               whileHover={{ scale: 1.05 }}
               style={googleBtn}
             >
-              Continue with Google 🌍
+              Continue with Google
             </motion.button>
 
             <p style={footer}>
@@ -150,7 +139,7 @@ export default function Login() {
             transition={{ duration: 0.8 }}
             style={successBox}
           >
-            ✅ Login Successful
+            Login Successful
             <br />
             <span style={{ fontSize: "14px" }}>Welcome to Safarsathi</span>
           </motion.div>
@@ -160,11 +149,10 @@ export default function Login() {
   );
 }
 
-/* ================= STYLES ================= */
 
 const page = {
   minHeight: "100vh",
-  paddingTop: "100px", // space for navbar
+  paddingTop: "100px",
   paddingBottom: "40px",
   backgroundImage:
     "url(https://images.unsplash.com/photo-1500530855697-b586d89ba3ee)",
@@ -238,7 +226,7 @@ const label = {
 const activeLabel = {
   top: "-10px",
   left: "10px",
-  background: "#008cff", // MMT Blue
+  background: "#008cff",
   padding: "0 8px",
   borderRadius: "4px",
   fontSize: "11px",

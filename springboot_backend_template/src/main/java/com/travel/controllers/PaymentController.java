@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
-import com.travel.services.EmailService; // Ensure this is imported
+import com.travel.services.EmailService;
 
 @RestController
 @RequestMapping("/api/payments")
@@ -26,9 +26,8 @@ public class PaymentController {
     private com.travel.utils.PdfInvoiceGenerator pdfInvoiceGenerator;
 
     @Autowired
-    private EmailService emailService; // Inject EmailService
+    private EmailService emailService;
 
-    // In-memory OTP Storage (simple implementation for demonstration)
     private Map<String, String> otpStorage = new ConcurrentHashMap<>();
 
     @PostMapping("/send-otp")
@@ -36,8 +35,6 @@ public class PaymentController {
         String otp = String.format("%06d", new Random().nextInt(999999));
         otpStorage.put(email, otp);
 
-        // Use a separate thread to send email to avoid blocking the response
-        // significantly
         new Thread(() -> emailService.sendPaymentOtp(email, otp)).start();
 
         return ResponseEntity.ok("OTP sent to " + email);
@@ -49,7 +46,7 @@ public class PaymentController {
         String otp = data.get("otp");
 
         if (otpStorage.containsKey(email) && otpStorage.get(email).equals(otp)) {
-            otpStorage.remove(email); // OTP is one-time use
+            otpStorage.remove(email);
             return ResponseEntity.ok(Map.of("status", "success", "message", "OTP Verified"));
         }
         return ResponseEntity.badRequest().body(Map.of("status", "error", "message", "Invalid OTP"));
@@ -79,8 +76,6 @@ public class PaymentController {
             PaymentResponse response = paymentService.createOrder(request);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            System.err.println("[CREATE-ORDER] EXCEPTION: " + e.getMessage());
-            e.printStackTrace();
             return ResponseEntity.badRequest().body(
                     Map.of("error", e.getMessage() != null ? e.getMessage() : "Unknown error during order creation"));
         }
@@ -96,8 +91,7 @@ public class PaymentController {
                 return ResponseEntity.badRequest().body(Map.of("status", "error", "message", "Invalid signature"));
             }
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("status", "error", "message",
-                    e.getMessage() != null ? e.getMessage() : "Unknown error during verification"));
+            return ResponseEntity.badRequest().body(Map.of("status", "error", "message", "Error during verification"));
         }
     }
 }

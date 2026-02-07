@@ -8,10 +8,10 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                     <div className="space-y-6">
                         <div className="text-2xl font-black tracking-tight">
-                            Safar<span className="text-blue-500">Saathi</span> 🌍
+                            Safar<span className="text-blue-500">Saathi</span>
                         </div>
                         <p className="text-gray-400 text-sm leading-relaxed">
-                            Your ultimate travel companion. Booking flights, hotels, and memorable experiences has never been easier. Clone by Antigravity.
+                            Your ultimate travel companion. Booking flights, hotels, and memorable experiences has never been easier.
                         </p>
                         <div className="flex gap-4">
                             <Facebook size={20} className="text-gray-400 hover:text-blue-500 cursor-pointer transition-colors" />

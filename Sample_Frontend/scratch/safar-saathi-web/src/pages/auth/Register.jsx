@@ -8,7 +8,6 @@ export default function Register() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // Form State
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -51,26 +50,23 @@ export default function Register() {
                         <h2 style={title}>Create Account</h2>
                         <p style={subtitle}>Join Safarsathi and start your journey</p>
 
-                        {/* Role Selector */}
                         <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
                             <div
                                 style={formData.userRole === 'CUSTOMER' ? activeRoleBtn : roleBtn}
                                 onClick={() => setFormData({ ...formData, userRole: 'CUSTOMER' })}
                             >
-                                👤 Traveler
+                                Traveler
                             </div>
                             <div
                                 style={formData.userRole === 'VENDOR' ? activeRoleBtn : roleBtn}
                                 onClick={() => setFormData({ ...formData, userRole: 'VENDOR' })}
                             >
-                                🏨 Organizer
+                                Organizer
                             </div>
                         </div>
 
-                        {/* Error Message */}
                         {error && <p style={errorStyle}>{error}</p>}
 
-                        {/* Full Name */}
                         <div style={field}>
                             <input
                                 required
@@ -82,7 +78,6 @@ export default function Register() {
                             <label style={formData.name ? { ...label, ...activeLabel } : label}>Full Name</label>
                         </div>
 
-                        {/* Email */}
                         <div style={field}>
                             <input
                                 type="email"
@@ -95,7 +90,6 @@ export default function Register() {
                             <label style={formData.email ? { ...label, ...activeLabel } : label}>Email Address</label>
                         </div>
 
-                        {/* Password */}
                         <div style={field}>
                             <input
                                 type="password"
@@ -108,7 +102,6 @@ export default function Register() {
                             <label style={formData.password ? { ...label, ...activeLabel } : label}>Create Password</label>
                         </div>
 
-                        {/* Register Button */}
                         <motion.button
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
@@ -130,7 +123,7 @@ export default function Register() {
                         transition={{ duration: 0.8 }}
                         style={successBox}
                     >
-                        ✅ Registration Successful
+                        Registration Successful
                         <br />
                         <span style={{ fontSize: "14px" }}>Redirecting to Login...</span>
                     </motion.div>
@@ -140,7 +133,6 @@ export default function Register() {
     );
 }
 
-/* ================= STYLES ================= */
 
 const page = {
     minHeight: "100vh",

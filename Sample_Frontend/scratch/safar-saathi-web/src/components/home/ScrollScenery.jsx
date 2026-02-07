@@ -9,17 +9,14 @@ const ScrollScenery = () => {
         offset: ["start start", "end end"],
     });
 
-    // Background transitions
     const beachOpacity = useTransform(scrollYProgress, [0, 0.3, 0.4], [1, 1, 0]);
     const mountainOpacity = useTransform(scrollYProgress, [0.3, 0.4, 0.6, 0.7], [0, 1, 1, 0]);
     const cityOpacity = useTransform(scrollYProgress, [0.6, 0.7, 1], [0, 1, 1]);
 
-    // Suitcase animation
     const suitcaseY = useTransform(scrollYProgress, [0, 0.2], [100, 0]);
     const suitcaseScale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.5, 1, 1, 0.5]);
     const suitcaseRotate = useTransform(scrollYProgress, [0.1, 0.3], [0, -10]);
 
-    // Item pop-outs
     const shirtY = useTransform(scrollYProgress, [0.3, 0.5], [0, -150]);
     const shirtX = useTransform(scrollYProgress, [0.3, 0.5], [0, -100]);
     const shirtOpacity = useTransform(scrollYProgress, [0.3, 0.4, 0.5], [0, 1, 0]);
@@ -32,14 +29,12 @@ const ScrollScenery = () => {
     const passportX = useTransform(scrollYProgress, [0.5, 0.7], [0, 120]);
     const passportOpacity = useTransform(scrollYProgress, [0.5, 0.6, 0.7], [0, 1, 0]);
 
-    // Final text
     const textOpacity = useTransform(scrollYProgress, [0.8, 0.95], [0, 1]);
     const textScale = useTransform(scrollYProgress, [0.8, 0.95], [0.8, 1]);
 
     return (
         <div ref={containerRef} className="relative h-[400vh] w-full bg-black">
             <div className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center">
-                {/* Backdrps */}
                 <motion.div style={{ opacity: beachOpacity }} className="absolute inset-0">
                     <img
                         src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop"
@@ -67,9 +62,7 @@ const ScrollScenery = () => {
                     <div className="absolute inset-0 bg-black/20" />
                 </motion.div>
 
-                {/* Animated Elements */}
                 <div className="relative z-10 flex flex-col items-center">
-                    {/* Suitcase */}
                     <motion.div
                         style={{ y: suitcaseY, scale: suitcaseScale, rotate: suitcaseRotate }}
                         className="text-white"
@@ -77,7 +70,6 @@ const ScrollScenery = () => {
                         <Luggage size={120} strokeWidth={1.5} className="drop-shadow-2xl" />
                     </motion.div>
 
-                    {/* Popping Items */}
                     <motion.div
                         style={{ y: shirtY, x: shirtX, opacity: shirtOpacity }}
                         className="absolute text-blue-100"
@@ -99,7 +91,6 @@ const ScrollScenery = () => {
                         <BookOpen size={40} />
                     </motion.div>
 
-                    {/* Final Reveal Text */}
                     <motion.div
                         style={{ opacity: textOpacity, scale: textScale }}
                         className="absolute text-center"
@@ -111,7 +102,6 @@ const ScrollScenery = () => {
                     </motion.div>
                 </div>
 
-                {/* Initial Hero Text Overlay */}
                 <motion.div
                     initial={{ opacity: 1 }}
                     style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [1, 0]) }}
@@ -125,7 +115,6 @@ const ScrollScenery = () => {
                     </p>
                 </motion.div>
 
-                {/* Scroll Indicator */}
                 <motion.div
                     style={{ opacity: useTransform(scrollYProgress, [0, 0.05], [1, 0]) }}
                     className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white flex flex-col items-center gap-2"

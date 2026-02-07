@@ -13,6 +13,5 @@ public interface PackageService {
 
     PackageDto getPackageById(Long id);
 
-    // Search packages by name/place
     List<PackageDto> searchPackages(String query);
 }
