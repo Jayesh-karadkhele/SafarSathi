@@ -40,12 +40,12 @@ public class PdfInvoiceGenerator {
             table.addCell("Description");
             table.addCell("Amount");
 
-            table.addCell(trip.getSelectedPackage().getPackageName() + " trip");
-            table.addCell("INR " + trip.getSelectedPackage().getPrice());
+            table.addCell(trip.getSelectedPackage().getPackageName() + " (" + trip.getPackageTier() + ") trip");
+            table.addCell("INR " + trip.getBudget());
 
             document.add(table);
 
-            document.add(new Paragraph("\nTotal Amount Paid: INR " + trip.getSelectedPackage().getPrice()).setBold());
+            document.add(new Paragraph("\nTotal Amount Paid: INR " + trip.getBudget()).setBold());
             document.add(new Paragraph("\nStatus: CONFIRMED").setBold());
 
             document.add(new Paragraph("\n\nThank you for booking with SafarSaathi!"));

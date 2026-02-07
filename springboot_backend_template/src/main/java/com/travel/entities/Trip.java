@@ -44,11 +44,11 @@ public class Trip {
     private Double budget;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status_str", length = 50)
+    @Column(name = "trip_status", length = 50)
     private TripStatus tripStatus;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tier_str", length = 50)
+    @Column(name = "package_tier", length = 50)
     private PackageTier packageTier;
 
     @ManyToOne

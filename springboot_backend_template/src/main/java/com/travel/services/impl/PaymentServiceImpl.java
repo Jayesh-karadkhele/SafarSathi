@@ -136,9 +136,12 @@ public class PaymentServiceImpl implements PaymentService {
             tripRepository.save(trip);
             paymentRepository.save(payment);
 
-            // 🚀 7. TRULY ASYNC POST-PAYMENT TASKS
-            // Moved to a separate service to ensure it runs in a background thread
-            postPaymentService.sendPostPaymentNotificationAsync(savedBooking);
+            // 🚀 7. TRULY ASYNC POST-PAYMENT TASKS (Failsafe)
+            try {
+                postPaymentService.sendPostPaymentNotificationAsync(savedBooking);
+            } catch (Exception e) {
+                System.err.println("[BACKEND] Post-payment tasks failed to start: " + e.getMessage());
+            }
 
             return true;
         } else {

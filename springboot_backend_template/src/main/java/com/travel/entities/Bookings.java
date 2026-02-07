@@ -25,6 +25,6 @@ public class Bookings {
 	private LocalDate bookingDate;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "status_str", length = 50)
+	@Column(name = "bookings_status", length = 50)
 	private BookingStatus bookingsStatus;
 }
