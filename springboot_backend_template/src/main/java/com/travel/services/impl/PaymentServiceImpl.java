@@ -8,11 +8,8 @@ import com.travel.dtos.PaymentResponse;
 import com.travel.entities.*;
 import com.travel.repositories.*;
 import com.travel.services.PaymentService;
-import com.travel.services.TripService;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,7 +46,7 @@ public class PaymentServiceImpl implements PaymentService {
     private com.travel.services.PostPaymentService postPaymentService;
 
     @Autowired
-    private com.travel.utils.PdfInvoiceGenerator pdfInvoiceGenerator;
+    private com.travel.services.PostPaymentService postPaymentService;
 
     @Override
     public PaymentResponse createOrder(PaymentRequest request) throws Exception {

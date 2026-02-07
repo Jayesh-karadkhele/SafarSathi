@@ -80,7 +80,8 @@ const PackageDetail = () => {
                         navigate('/customer/my-bookings');
                     } catch (verifyError) {
                         console.error("Verification failed:", verifyError);
-                        alert("Payment verification failed.");
+                        const errorMessage = verifyError.response?.data?.message || "Payment verification failed.";
+                        alert(errorMessage);
                     }
                 },
                 prefill: {
