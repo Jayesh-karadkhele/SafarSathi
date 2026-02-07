@@ -89,15 +89,21 @@ public class PaymentController {
 
     @PostMapping("/verify-payment")
     public ResponseEntity<?> verifyPayment(@RequestBody Map<String, String> data) {
+        System.out.println("[VERIFY-PAYMENT] Payload received: " + data);
         try {
             boolean isValid = paymentService.verifyPayment(data);
             if (isValid) {
+                System.out.println("[VERIFY-PAYMENT] Verification SUCCESS");
                 return ResponseEntity.ok(Map.of("status", "success", "message", "Payment verified successfully"));
             } else {
+                System.err.println("[VERIFY-PAYMENT] Verification FAILED: Invalid Signature");
                 return ResponseEntity.badRequest().body(Map.of("status", "error", "message", "Invalid signature"));
             }
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Map.of("status", "error", "message", e.getMessage()));
+            System.err.println("[VERIFY-PAYMENT] EXCEPTION during verification: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(Map.of("status", "error", "message",
+                    e.getMessage() != null ? e.getMessage() : "Unknown error during verification"));
         }
     }
 }

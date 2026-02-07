@@ -46,7 +46,7 @@ public class PaymentServiceImpl implements PaymentService {
     private PackagesRepository packagesRepository;
 
     @Autowired
-    private com.travel.services.EmailService emailService;
+    private com.travel.services.PostPaymentService postPaymentService;
 
     @Autowired
     private com.travel.utils.PdfInvoiceGenerator pdfInvoiceGenerator;
@@ -138,9 +138,9 @@ public class PaymentServiceImpl implements PaymentService {
             tripRepository.save(trip);
             paymentRepository.save(payment);
 
-            // 🚀 7. ASYNC POST-PAYMENT TASKS (PDF & Email)
-            // This prevents the frontend from "freezing" while waiting for the email
-            sendPostPaymentNotificationAsync(savedBooking);
+            // 🚀 7. TRULY ASYNC POST-PAYMENT TASKS
+            // Moved to a separate service to ensure it runs in a background thread
+            postPaymentService.sendPostPaymentNotificationAsync(savedBooking);
 
             return true;
         } else {
@@ -151,22 +151,6 @@ public class PaymentServiceImpl implements PaymentService {
                 paymentRepository.save(payment);
             }
             return false;
-        }
-    }
-
-    /**
-     * Helper method to handle PDF generation and Email sending in the background.
-     */
-    @Async
-    public void sendPostPaymentNotificationAsync(Bookings booking) {
-        try {
-            System.out.println("DEBUG: Starting Async Post-Payment Tasks for Booking: " + booking.getBookingId());
-            byte[] invoicePdf = pdfInvoiceGenerator.generateInvoice(booking);
-            emailService.sendBookingConfirmation(booking.getTrip().getCustomer(), booking, invoicePdf);
-            System.out.println("DEBUG: Async Post-Payment Tasks completed successfully.");
-        } catch (Exception e) {
-            System.err.println("ERROR: Async Post-payment email/PDF failed: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 }
