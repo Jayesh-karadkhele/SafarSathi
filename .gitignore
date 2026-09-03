@@ -1,0 +1,35 @@
+# IDE & Editor Files
+.metadata/
+.settings/
+.project
+.classpath
+.factorypath
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build Artifacts & Dependencies
+bin/
+target/
+build/
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+dist-ssr/
+*.local
+
+# Backups, Archives & Logs
+backups/
+safarsathi_project_backup/
+*.zip
+*.tar.gz
+*.rar
+*.log
+.agent/
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+desktop.ini
