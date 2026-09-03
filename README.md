@@ -2,6 +2,7 @@
 
 # 🧳 SafarSaathi — Premium Travel & Hotel Booking Platform
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-safarsathi.pages.dev-008cff?style=for-the-badge&logo=cloudflare)](https://safarsathi.pages.dev/)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Jayesh--karadkhele%2FSafarSathi-blue?style=for-the-badge&logo=github)](https://github.com/Jayesh-karadkhele/SafarSathi)
 [![React](https://img.shields.io/badge/Frontend-React%2018%20%7C%20Vite-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
 [![Spring Boot](https://img.shields.io/badge/Backend-Spring%20Boot%203-6DB33F?style=for-the-badge&logo=springboot)](https://spring.io/projects/spring-boot)
@@ -15,7 +16,7 @@
 
 ---
 
-[🔗 GitHub Repository](https://github.com/Jayesh-karadkhele/SafarSathi) &nbsp;|&nbsp; [🚀 Live Demo](http://localhost:5173/) &nbsp;|&nbsp; [📖 API Docs](http://localhost:8080/swagger-ui/index.html)
+[🚀 Live Demo App](https://safarsathi.pages.dev/) &nbsp;|&nbsp; [🔗 GitHub Repository](https://github.com/Jayesh-karadkhele/SafarSathi) &nbsp;|&nbsp; [📖 API Docs](http://localhost:8080/swagger-ui/index.html)
 
 </div>
 
@@ -26,6 +27,8 @@
 **SafarSaathi** is a comprehensive, modern travel ecosystem designed to streamline holiday package discovery, luxury villa & hotel reservations, real-time payment processing, and vendor partner package publishing.
 
 Engineered with a responsive **React 18 + Vite** frontend and a robust **Spring Boot 3 + Hibernate JPA** backend, SafarSaathi features glassmorphism visual aesthetics, role-based JWT security, automated PDF invoice generation, and instant Razorpay payment gateway integration.
+
+🌐 **Live Application**: **[https://safarsathi.pages.dev/](https://safarsathi.pages.dev/)**
 
 ---
 
@@ -60,6 +63,7 @@ Engineered with a responsive **React 18 + Vite** frontend and a robust **Spring 
 | Domain | Technology | Purpose |
 | :--- | :--- | :--- |
 | **Frontend UI** | **React 18**, **Vite 5** | High-performance single page application framework |
+| **Hosting & CDN** | **Cloudflare Pages** | Global edge distribution & deployment ([safarsathi.pages.dev](https://safarsathi.pages.dev/)) |
 | **Styling & Motion** | **TailwindCSS**, **Framer Motion** | Glassmorphic visual components & fluid transitions |
 | **Icons & Assets** | **Lucide React** | Modern vector icons |
 | **Backend Engine** | **Java 21**, **Spring Boot 3.5.7** | RESTful web services & business logic orchestration |
@@ -77,6 +81,7 @@ Engineered with a responsive **React 18 + Vite** frontend and a robust **Spring 
 ```
 +-----------------------------------------------------------------------+
 |                            SAFARSAATHI CLIENT                         |
+|        (Cloudflare Pages Deployment: https://safarsathi.pages.dev)    |
 |                     (React 18 + Vite + TailwindCSS)                   |
 +-----------------------------------------------------------------------+
                                    |
@@ -139,6 +144,11 @@ SafarSathi/
 ---
 
 ## 🚀 Getting Started
+
+### Live Demo
+Experience the live application deployed at: **[https://safarsathi.pages.dev/](https://safarsathi.pages.dev/)**
+
+---
 
 ### Prerequisites
 - **Node.js**: v18.0.0 or higher
@@ -222,7 +232,8 @@ The web application will open on **`http://localhost:5173`**.
 
 Developed with ❤️ by **[Jayesh Karadkhele](https://github.com/Jayesh-karadkhele)**
 
-- **GitHub**: [@Jayesh-karadkhele](https://github.com/Jayesh-karadkhele)
+- **Live Demo**: [https://safarsathi.pages.dev/](https://safarsathi.pages.dev/)
+- **GitHub Profile**: [@Jayesh-karadkhele](https://github.com/Jayesh-karadkhele)
 - **Repository**: [https://github.com/Jayesh-karadkhele/SafarSathi](https://github.com/Jayesh-karadkhele/SafarSathi)
 
 ---
